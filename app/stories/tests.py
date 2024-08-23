@@ -1,6 +1,7 @@
 from django.test import TestCase
 from stories import models
 
+
 class ModelTests(TestCase):
     """ Tests for models."""
 
