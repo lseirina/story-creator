@@ -12,3 +12,6 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(story, story.title))
+
+
+
