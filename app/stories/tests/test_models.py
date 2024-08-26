@@ -1,11 +1,17 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 """SimpleUploadedFile — это класс, который используется в тестах.
    Он позволяет имитировать процесс загрузки файла, создавая объект файла,
    который можно использовать для тестирования."""
 from django.core.files.uploadedfile import SimpleUploadedFile
 from stories.models import Story, VoiceRecording
+import tempfile
 
-
+"""Декоратор @override_settings  позволяет переопределять
+любые настройки в settings.py
+Функция tempfile.gettempdir() из стандартной библиотеки Python возвращает
+путь к временной директории.
+Эта директория будет автоматически очищена операционной системой"""
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class ModelTests(TestCase):
     """ Tests for models."""
     def setUp(self):
@@ -52,7 +58,7 @@ class ModelTests(TestCase):
                          f'Recording for story {self.story.title}')
 
     def test_delete_story_deletes_recording(self):
-        recording = VoiceRecording.objects.create(
+        VoiceRecording.objects.create(
             story=self.story,
             file=SimpleUploadedFile('sample.mp3',
                                     b'file_content',
