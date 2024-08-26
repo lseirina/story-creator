@@ -7,4 +7,8 @@ class StoryForm(forms.ModelForm):
         model = models.Story
         fields = ['title', 'content']
 
-        
+
+class VoiceRecording(forms.ModelForm):
+    class Meta:
+        model = models.VoiceRecording
+        fields = ['file']
