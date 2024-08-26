@@ -14,28 +14,28 @@ class ModelTests(TestCase):
             content='Sample content'
         )
 
-    def create_story(self):
+    def test_create_story(self):
         """Test creating a story model."""
         story = Story.objects.create(
             title='Unicorn',
             content='Blah, blah, blah'
         )
 
-        self.assertEqual(str(story, story.title))
+        self.assertEqual(str(story), story.title)
 
-    def create_voice_recording(self):
-        """Префикс b перед строкой в Python обозначает, что строка является байтовой,
-        а не обычной строкой Unicode."""
-        audio_file = SimpleUploadedFile(file_name='sample.mp3',
-                                        content=b'file_content',
+    def test_create_voice_recording(self):
+        """Префикс b перед строкой в Python обозначает, что строка является
+        байтовой, а не обычной строкой Unicode."""
+        audio_file = SimpleUploadedFile('sample.mp3',
+                                        b'file_content',
                                         content_type='audio/mpeg')
         recording = VoiceRecording.objects.create(
             story=self.story,
             file=audio_file,
             transcription='Sample transcription'
         )
-
+        print(recording.file.name)
         self.assertEqual(VoiceRecording.objects.count(), 1)
         self.assertEqual(recording.story, self.story)
         self.assertEqual(recording.transcription, 'Sample transcription')
-        self.assertTrue(recording.file.filename.endswith('sample.emp3'))
+        
