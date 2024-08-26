@@ -38,4 +38,15 @@ class ModelTests(TestCase):
         self.assertEqual(VoiceRecording.objects.count(), 1)
         self.assertEqual(recording.story, self.story)
         self.assertEqual(recording.transcription, 'Sample transcription')
-        
+
+    def test_voice_recording_str(self):
+        recording = VoiceRecording.objects.create(
+            story=self.story,
+            file=SimpleUploadedFile('sample.mp3',
+                                    b'file_content',
+                                    content_type='audio/mpeg'),
+            transcription='Sample transcription'
+        )
+
+        self.assertEqual(str(recording),
+                         f'Recording for story {self.story.title}')
