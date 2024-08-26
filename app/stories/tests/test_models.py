@@ -50,3 +50,14 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(recording),
                          f'Recording for story {self.story.title}')
+
+    def test_delete_story_deletes_recording(self):
+        recording = VoiceRecording.objects.create(
+            story=self.story,
+            file=SimpleUploadedFile('sample.mp3',
+                                    b'file_content',
+                                    content_type='audio/mpeg')
+        )
+        self.story.delete()
+
+        self.assertEqual(VoiceRecording.objects.count(), 0)
