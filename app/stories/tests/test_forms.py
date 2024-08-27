@@ -15,3 +15,10 @@ class FormTest(TestCase):
 
         story = form.save() # is used to save the data from a form into the corresponding model instance
         self.assertEqual(story.title, form_data['title'])
+
+    def test_story_form_unvalid(self):
+        """Test not to create story if form is not valid."""
+        form_data = {'title': '', 'content': 'It is a content'}
+        form = VoiceRecordingForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
