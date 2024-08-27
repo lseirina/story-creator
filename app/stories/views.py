@@ -3,7 +3,7 @@ from stories.models import Story, VoiceRecording
 from stories.forms import StoryForm, VoiceRecordingForm
 
 
-def create_list(request):
+def story_list(request):
     stories = Story.objects.all()
     return render(request, 'stories/story_list.html', {'stories': stories})
 
