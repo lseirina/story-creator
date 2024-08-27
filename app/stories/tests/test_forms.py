@@ -47,3 +47,4 @@ class FormTest(TestCase):
         """Test create form with missing file returns error."""
         form = VoiceRecordingForm({})
         self.assertFalse(form.is_valid())
+
