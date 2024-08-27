@@ -13,5 +13,5 @@ class FormTest(TestCase):
 
         self.assertTrue(form.is_valid())
 
-        story = form.save()
+        story = form.save() # is used to save the data from a form into the corresponding model instance
         self.assertEqual(story.title, form_data['title'])
