@@ -42,3 +42,8 @@ class FormTest(TestCase):
         recording.story = story
         recording.save()
         self.assertEqual(recording.file.size, len(b'file_content'))
+
+    def test_recording_form_missing_file(self):
+        """Test create form with missing file returns error."""
+        form = VoiceRecordingForm({})
+        self.assertFalse(form.is_valid())
