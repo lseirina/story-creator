@@ -9,7 +9,7 @@ def story_list(request):
 
 
 
-
+# добавить предсавление для put patch и story_detail помимо остальных
 
 
 
