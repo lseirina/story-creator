@@ -10,6 +10,7 @@ class ViewTests(TestCase):
     def setUp(self):
         self.client = Client()
 
+
 def test_view_correct_templates(self):
     """Test the view uses correct templates."""
     res = self.client.get(STORIES_URL)

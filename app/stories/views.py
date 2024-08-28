@@ -8,6 +8,15 @@ def story_list(request):
     return render(request, 'stories/story_list.html', {'stories': stories})
 
 
+def create_story(request):
+    if request.method == 'POST':
+        form = StoryForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('story_list')
+        else:
+            form = StoryForm()
+    return render(request, 'stories/create_story.html', {'form': form})
 
 # добавить предсавление для put patch и story_detail помимо остальных
 
