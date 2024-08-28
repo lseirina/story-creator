@@ -2,12 +2,29 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from stories.views import story_list
+from stories.models import Story
 
 
 STORIES_URL = reverse('story_list')
 
+
 def detail_url(story_id):
     return reverse('story_detail', args=[story_id])
+
+
+def create_story(**params):
+    """Create and return a new story."""
+    defaults = {
+        'title': 'Sample title',
+        'content': 'It is a content'
+    }
+
+    defaults.update(params)
+
+    story = Story.objects.create(**defaults)
+
+    return story
+
 
 class ViewTests(TestCase):
     def setUp(self):
@@ -43,3 +60,5 @@ def test_empty_list(self):
 
 
 def test_view_coorect_templates(self):
+    url = detail_url
+    res = self.client.get()
