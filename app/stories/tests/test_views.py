@@ -67,6 +67,7 @@ def test_view_coorect_templates(self):
     self.assertEqual(res.status_code, 200)
     self.assertTemplateUsed(res, 'stories/create_story.html')
 
+
 def test_story_detail_correct_content(self):
     """Test story_detail view contains correct cintent."""
     story = create_story()
