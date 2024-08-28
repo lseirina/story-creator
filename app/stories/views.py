@@ -8,6 +8,11 @@ def story_list(request):
     return render(request, 'stories/story_list.html', {'stories': stories})
 
 
+def story_detail(request, story_id):
+    story = Story.objects.get(id=story_id)
+    return render(request, 'stories/story_detail.html', {'story': story})
+
+
 def create_story(request):
     if request.method == 'POST':
         form = StoryForm(request.POST)
