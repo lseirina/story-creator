@@ -60,5 +60,9 @@ def test_empty_list(self):
 
 
 def test_view_coorect_templates(self):
-    url = detail_url
-    res = self.client.get()
+    story = create_story()
+    url = detail_url(story.id)
+    res = self.client.get(url)
+
+    self.assertEqual(res.status_code, 200)
+    self.assertTemplateUsed(res, 'stories/create_story.html')
