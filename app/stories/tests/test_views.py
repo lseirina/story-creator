@@ -27,5 +27,14 @@ def test_context_data(self):
     res = self.client.get(STORIES_URL)
 
     self.assertequal(res.status_code, 200)
-    self.assertIn('stories', res.context )
+    self.assertIn('stories', res.context)
     self.assertEqual(len(res.context['syories'], 2))
+
+
+def test_empty_list(self):
+    """Test view handles empty story."""
+    res = self.client.get(STORIES_URL)
+
+    self.assertEqual(res.status_code, 200)
+    self.assertIn('stories', res.context)
+    self.assertEqual(res.context['stories'], [])
