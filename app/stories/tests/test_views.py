@@ -6,6 +6,8 @@ from stories.views import story_list
 
 STORIES_URL = reverse('story_list')
 
+def detail_url(story_id):
+    return reverse('story_detail', args=[story_id])
 
 class ViewTests(TestCase):
     def setUp(self):
@@ -38,3 +40,6 @@ def test_empty_list(self):
     self.assertEqual(res.status_code, 200)
     self.assertIn('stories', res.context)
     self.assertEqual(res.context['stories'], [])
+
+
+def test_view_coorect_templates(self):
