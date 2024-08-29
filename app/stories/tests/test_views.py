@@ -99,3 +99,10 @@ class AddRecordingViewTests(TestCase):
         self.assertTrue(VoiceRecording.objects.filter(story=self.story).exists())
         recording = VoiceRecording.objects.get(story=self.story)
         self.assertEqual(recording.story, self.story)
+
+    def test_add_recording_get_request(self):
+        """Test add recording get request successful."""
+        res = self.client.get(self.url)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed('stories/add_recording.html')
