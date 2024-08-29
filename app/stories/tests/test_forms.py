@@ -1,13 +1,13 @@
 """
 Tests forms.
 """
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from stories.forms import StoryForm, VoiceRecordingForm
 from stories.models import Story
 import tempfile
 
-
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class FormTest(TestCase):
     def test_story_form_valid(self):
         """Test create story if form is valid."""
@@ -47,4 +47,3 @@ class FormTest(TestCase):
         """Test create form with missing file returns error."""
         form = VoiceRecordingForm({})
         self.assertFalse(form.is_valid())
-
