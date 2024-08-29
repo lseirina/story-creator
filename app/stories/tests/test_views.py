@@ -1,8 +1,9 @@
 """Tests for views."""
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
 from stories.views import story_list
-from stories.models import Story
+from stories.models import Story, VoiceRecording
 
 
 STORIES_URL = reverse('story_list')
@@ -26,7 +27,7 @@ def create_story(**params):
     return story
 
 
-class ViewTests(TestCase):
+class StoryViewTests(TestCase):
     def setUp(self):
         self.client = Client()
 
@@ -77,3 +78,24 @@ def test_story_detail_correct_content(self):
     self.assertEqual(res.status_code, 200)
     self.assertContains(res, story.title)
     self.assertContains(res, story.content)
+
+
+class AddRecordingViewTests(TestCase):
+    """"Tests for add recording view."""
+
+    def SetUp(self):
+        self.story = create_story()
+        self.client = Client()
+        self.url = detail_url(self.story.id)
+
+    def test_add_recording_success(self):
+        """Test add recording to story is successful."""
+        audio_file = SimpleUploadedFile('sample.mp3',
+                                        b'file_content',
+                                        content_type='audio/mpeg')
+        res = self.client.post(self.story, {'file': audio_file})
+
+        self.assertEqual(res.status_code, 302)
+        self.assertTrue(VoiceRecording.objects.filter(story=self.story).exists())
+        recording = VoiceRecording.objects.get(story=self.story)
+        self.assertEqual(recording.story, self.story)
