@@ -106,3 +106,5 @@ class AddRecordingViewTests(TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertTemplateUsed('stories/add_recording.html')
+
+    

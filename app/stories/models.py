@@ -21,6 +21,7 @@ class VoiceRecording(models.Model):
                               on_delete=models.CASCADE)
     file = models.FileField(upload_to='recordings/') # Параметр upload_to определяет путь, куда будут загружаться файлы на сервере.
     transcription = models.TextField(blank=True, null=True)
+    is_edited = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Recording for story {self.story.title}'
