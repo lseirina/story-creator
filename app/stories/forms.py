@@ -14,7 +14,7 @@ class VoiceRecordingForm(forms.ModelForm):
         fields = ['file']
 
 
-class EditTranscription(forms.ModelForm):
+class EditTranscriptionForm(forms.ModelForm):
     class Meta:
         model = models.VoiceRecording
         fields = ['transcription']

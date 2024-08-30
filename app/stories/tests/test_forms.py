@@ -3,12 +3,12 @@ Tests forms.
 """
 from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
-from stories.forms import StoryForm, VoiceRecordingForm
-from stories.models import Story
+from stories.forms import StoryForm, VoiceRecordingForm, EditTranscriptionForm
+from stories.models import Story, VoiceRecording
 import tempfile
 
-@override_settings(MEDIA_ROOT=tempfile.gettempdir())
-class FormTest(TestCase):
+
+class StoryTest(TestCase):
     def test_story_form_valid(self):
         """Test create story if form is valid."""
         form_data = {'title': 'Sample title', 'content': 'It is content'}
@@ -22,10 +22,12 @@ class FormTest(TestCase):
     def test_story_form_unvalid(self):
         """Test not to create story if form is not valid."""
         form_data = {'title': '', 'content': 'It is a content'}
-        form = VoiceRecordingForm(data=form_data)
+        form = StoryForm(data=form_data)
 
         self.assertFalse(form.is_valid())
 
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+class VoiceRecordingTests(TestCase):
     def test_recording_form_valid(self):
         """Test record audio file if form is valid."""
         audio_file = SimpleUploadedFile('sample.mp3',
@@ -47,3 +49,35 @@ class FormTest(TestCase):
         """Test create form with missing file returns error."""
         form = VoiceRecordingForm({})
         self.assertFalse(form.is_valid())
+
+
+class EditTranscriptionTests(TestCase):
+    def setUp(self):
+        audio_file = SimpleUploadedFile(
+             'sample.mp3',
+            b'file_content',
+            content_type='audio/mpeg'
+        )
+        self.recording = VoiceRecording.objects.create(
+            story=self.story,
+            file=audio_file,
+            transcription='It is transcription'
+        )
+        self.story = Story.objects.create(
+            title='Sample title',
+            content='It is content'
+        )
+
+    def test_is_edited_set_to_true(self):
+        """Test is edited set to true after editing."""
+        form = EditTranscriptionForm(
+                data={'transcription': "Edited transcription"},
+                instance=self.recording
+            )
+
+        self.assertTrue(form.is_valid())
+
+        update_recording = form.save()
+
+        self.assertTrue(update_recording.is_valid())
+        self.assertEqual(update_recording.transcription, 'Edited Transcription')
