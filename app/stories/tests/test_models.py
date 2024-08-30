@@ -79,3 +79,17 @@ class ModelTests(TestCase):
             transcription='Sampletranscription'
         )
         self.assertFalse(recording.is_edited)
+
+    def test_is_edited_after_editing(self):
+        """Test is_edited after editing is True."""
+        audio_file = SimpleUploadedFile('sample.mp3',
+                                        b'file_content',
+                                        content_type='audio/mpeg')
+        recording = VoiceRecording(
+            story=self.story,
+            file=audio_file,
+            transcription='Sampletranscription'
+        )
+        recording.transcription = 'Editing transcription'
+        recording.save()
+        self.assertTrue(recording.is_edited)
