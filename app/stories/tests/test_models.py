@@ -67,3 +67,15 @@ class ModelTests(TestCase):
         self.story.delete()
 
         self.assertEqual(VoiceRecording.objects.count(), 0)
+
+    def test_is_edited_false(self):
+        """Test is_edited is false by default."""
+        audio_file = SimpleUploadedFile('sample.mp3',
+                                        b'file_content',
+                                        content_type='audio/mpeg')
+        recording = VoiceRecording(
+            story=self.story,
+            file=audio_file,
+            transcription='Sampletranscription'
+        )
+        self.assertFalse(recording.is_edited)

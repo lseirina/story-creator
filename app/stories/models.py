@@ -25,3 +25,5 @@ class VoiceRecording(models.Model):
 
     def __str__(self):
         return f'Recording for story {self.story.title}'
+
+    
