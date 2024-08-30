@@ -12,3 +12,17 @@ class VoiceRecordingForm(forms.ModelForm):
     class Meta:
         model = models.VoiceRecording
         fields = ['file']
+
+
+class EditTranscription(forms.ModelForm):
+    class Meta:
+        model = models.VoiceRecording
+        fields = ['transcription']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.is_edited = True
+        if commit:
+            instance.save()
+
+        return instance
