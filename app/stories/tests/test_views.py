@@ -13,6 +13,10 @@ def detail_url(story_id):
     return reverse('story_detail', args=[story_id])
 
 
+def recording_url(recording_id):
+    return reverse('edit_transcription', args=[recording_id])
+
+
 def create_story(**params):
     """Create and return a new story."""
     defaults = {
@@ -80,7 +84,7 @@ def test_story_detail_correct_content(self):
     self.assertContains(res, story.content)
 
 
-class AddRecordingViewTests(TestCase):
+class RecordingViewTests(TestCase):
     """"Tests for add recording view."""
 
     def SetUp(self):
@@ -107,4 +111,5 @@ class AddRecordingViewTests(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTemplateUsed('stories/add_recording.html')
 
-    
+    def test_edit_recordig_success(self):
+        """Test to edit recording is successful."""
