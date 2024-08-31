@@ -84,7 +84,7 @@ def test_story_detail_correct_content(self):
     self.assertContains(res, story.content)
 
 
-class RecordingViewTests(TestCase):
+class AddRecordingViewTests(TestCase):
     """"Tests for add recording view."""
 
     def SetUp(self):
@@ -111,5 +111,31 @@ class RecordingViewTests(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTemplateUsed('stories/add_recording.html')
 
+
+class EditTranscription(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.story = Story.objects.create(
+            title='Test Title',
+            content='Test Content.',
+        )
+        audio_file = SimpleUploadedFile(
+            'sample.mp3',
+            b'file_content',
+            'audio/mpeg',
+        )
+        self.recording = VoiceRecording.objects.create(
+            story=self.story,
+            file=audio_file,
+            transcription='Test transcription.'
+        )
+
     def test_edit_recordig_success(self):
         """Test to edit recording is successful."""
+        url = recording_url(self.recording.id)
+        payload = {'transcription': 'Edited transcription'}
+        res = self.client.post(url, payload)
+
+        self.recording.refresh_from_db()
+        self.assertEqual(res.status_code, 302)
+        self.asssertEqual(res.transcription, payload['transcription'])
