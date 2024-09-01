@@ -139,3 +139,12 @@ class EditTranscription(TestCase):
         self.recording.refresh_from_db()
         self.assertEqual(res.status_code, 302)
         self.asssertEqual(res.transcription, payload['transcription'])
+
+    def test_edit_transcription_form_display(self):
+        """Test form display edit transcription."""
+        url = recording_url(self.recording.id)
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
+        self.ssertContains(res, self.recording.transcription)
+        self.assertTemplateUsed(res, 'stories/edit_transcription.html')
