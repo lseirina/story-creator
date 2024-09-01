@@ -130,7 +130,7 @@ class EditTranscription(TestCase):
             transcription='Test transcription.'
         )
 
-    def test_edit_recordig_success(self):
+    def test_edit_transcription_success(self):
         """Test to edit recording is successful."""
         url = recording_url(self.recording.id)
         payload = {'transcription': 'Edited transcription'}
