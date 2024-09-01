@@ -166,3 +166,13 @@ class EditTranscription(TestCase):
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 404)
+
+    def test_edit_transcription_redirect_on_success(self):
+        """Test after edit transcription redirect is successful."""
+        url1 = recording_url(self.recording.id)
+        payload = {'transcription': 'New transcription.'}
+        res = self.client.post(url1, payload)
+
+        self.assertEqual(res.status_coce, 200)
+        url2 = detail_url(self.recording.id)
+        self.assertRedirects(res, url2)
