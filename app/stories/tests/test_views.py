@@ -159,3 +159,10 @@ class EditTranscription(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertContains(res, self.recording.transcription)
         self.assertFalse(self.recording.is_edited)
+
+    def test_edit_transcription__recording_not_found(self):
+        """Test edit transcription recordign not found return error."""
+        url = recording_url(999)
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 404)
