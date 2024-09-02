@@ -43,7 +43,7 @@ def add_recording(request, story_id):
     return render(request, 'stories/add_recording.html', {'form': form})
 
 
-def edit_recording(request, recording_id):
+def edit_transcription(request, recording_id):
     """View to edit transcription."""
     recording = get_object_or_404(VoiceRecording, id=recording_id)
     if request.method == 'POST':

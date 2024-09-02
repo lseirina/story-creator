@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from stories import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('create/', views.create_story, name='create_story'),
+    path('<int:story_id>/add_recording/', views.add_recording, name='add_recording'),
+    path('recording/<int:recording_id>/edit/',
+         views.edit_transcription, name='edit_transcription')
 ]
