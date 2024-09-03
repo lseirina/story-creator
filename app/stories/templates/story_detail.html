@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block.title %}{{ story.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ story.title }}</h1>
+<p>{{ story.content }}</p>
+
+<h2>Recordings:</h2>
+<ul>
+    {% for recording in story.recordings.all %}
+        <li>
+            <a href="{% url 'edit_transcription' recording.id %}">Edit Transcription for Recording {{ recording.id }}</a>
+            <p>{{ recording transcription }}</p>
+        </li>
+    {% empty %}
+        <p>No recordings available.</p>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'add_recording' story.id%}">Add a recording</a>
+{% endblock %}
