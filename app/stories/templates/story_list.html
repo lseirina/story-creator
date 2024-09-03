@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Story List{% endblock %}
+{% block content %}
+<h>Story List</h>
+<ul>
+    {% for story in stories %}
+        <li>
+            <a href="{% url 'story_detail' story_id %}">{{ story.title }}</a>
+        </li>
+    {% empty %}
+        <p>No stories available.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

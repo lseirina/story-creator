@@ -53,7 +53,7 @@ def edit_transcription(request, recording_id):
             return redirect('story_detail', story_id=recording.story.id)
         else:
             form = EditTranscriptionForm(instance=recording)
-    return render(request, 'edit_transcription.htmp', {'form': form}, {'recording': recording})
+    return render(request, 'edit_transcription.html', {'form': form}, {'recording': recording})
 
 
 
