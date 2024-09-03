@@ -1,20 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from stories.models import Story, VoiceRecording
 from stories.forms import (StoryForm,
-                          VoiceRecordingForm,
-                          EditTranscriptionForm,)
+                           VoiceRecordingForm,
+                           EditTranscriptionForm,)
 
 
 def story_list(request):
     """View for listings stories."""
     stories = Story.objects.all()
-    return render(request, 'stories/story_list.html', {'stories': stories})
+    return render(request, 'story_list.html', {'stories': stories})
 
 
 def story_detail(request, story_id):
     """View for detail story."""
     story = Story.objects.get(id=story_id)
-    return render(request, 'stories/story_detail.html', {'story': story})
+    return render(request, 'story_detail.html', {'story': story})
 
 
 def create_story(request):
@@ -26,7 +26,7 @@ def create_story(request):
             return redirect('story_list')
         else:
             form = StoryForm()
-    return render(request, 'stories/create_story.html', {'form': form})
+    return render(request, 'create_story.html', {'form': form})
 
 
 def add_recording(request, story_id):
@@ -40,7 +40,7 @@ def add_recording(request, story_id):
             return redirect('story_detail', story_id=story_id)
         else:
             recording = VoiceRecordingForm()
-    return render(request, 'stories/add_recording.html', {'form': form})
+    return render(request, 'add_recording.html', {'form': form})
 
 
 def edit_transcription(request, recording_id):
@@ -53,7 +53,7 @@ def edit_transcription(request, recording_id):
             return redirect('story_detail', story_id=recording.story.id)
         else:
             form = EditTranscriptionForm(instance=recording)
-    return render(request, 'stories.edit_transcription.htmp', {'form': form}, {'recording': recording})
+    return render(request, 'edit_transcription.htmp', {'form': form}, {'recording': recording})
 
 
 

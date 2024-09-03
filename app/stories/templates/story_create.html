@@ -1,0 +1,17 @@
+разобраться с этим
+
+<!-- create_story.html -->
+<h1>Create a New Story</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<!-- add_recording.html -->
+<h1>Add a Voice Recording</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
