@@ -2,9 +2,11 @@
 {% block title %}Add a Voice Recording{% endblock %}
 
 {% block content %}
+<h>Add a Voice Recording</h>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
 </form>
+<a href="{% url 'story_detail' recording.story.id %}">Back to Story</a>
 {% endblock %}
