@@ -23,7 +23,11 @@ class VoiceRecording(models.Model):
     transcription = models.TextField(blank=True, null=True)
     is_edited = models.BooleanField(default=False)
 
+    def save(self, *args, **kwargs):
+        """Change is_edit to True if story exists."""
+        if self.pk and not VoiceRecording.objects.filter(pk=self.pk, transcription=self.transcription).exists():
+            self.is_edited = True
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f'Recording for story {self.story.title}'
-
-    

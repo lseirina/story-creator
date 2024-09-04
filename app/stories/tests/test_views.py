@@ -23,9 +23,7 @@ def create_story(**params):
         'title': 'Sample title',
         'content': 'It is a content'
     }
-
     defaults.update(params)
-
     story = Story.objects.create(**defaults)
 
     return story
@@ -35,53 +33,48 @@ class StoryViewTests(TestCase):
     def setUp(self):
         self.client = Client()
 
+    def test_view_correct_templates(self):
+        """Test the view uses correct templates."""
+        res = self.client.get(STORIES_URL)
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, 'stories/story_list.html')
 
-def test_view_correct_templates(self):
-    """Test the view uses correct templates."""
-    res = self.client.get(STORIES_URL)
-    self.assertEqual(res.status_code, 200)
-    self.assertTemplateUsed(res, 'stories/story_list.html')
+    def test_context_data(self):
+        """Test the view passes correct context data."""
+        Story.objects.create(title='Story 1', content='It as a content')
+        Story.objects.create(title='Story 2', content='It is a content')
 
+        res = self.client.get(STORIES_URL)
 
-def test_context_data(self):
-    """Test the view passes correct context data."""
-    Story.objects.create(title='Story 1', content='It as a content')
-    Story.objects.create(title='Story 2', content='It is a content')
+        self.assertequal(res.status_code, 200)
+        self.assertIn('stories', res.context)
+        self.assertEqual(len(res.context['syories'], 2))
 
-    res = self.client.get(STORIES_URL)
+    def test_empty_list(self):
+        """Test view handles empty story."""
+        res = self.client.get(STORIES_URL)
 
-    self.assertequal(res.status_code, 200)
-    self.assertIn('stories', res.context)
-    self.assertEqual(len(res.context['syories'], 2))
+        self.assertEqual(res.status_code, 200)
+        self.assertIn('stories', res.context)
+        self.assertEqual(res.context['stories'], [])
 
+    def test_view_coorect_templates(self):
+        story = create_story()
+        url = detail_url(story.id)
+        res = self.client.get(url)
 
-def test_empty_list(self):
-    """Test view handles empty story."""
-    res = self.client.get(STORIES_URL)
+        self.assertEqual(res.status_code, 200)
+        self.assertTemplateUsed(res, 'stories/create_story.html')
 
-    self.assertEqual(res.status_code, 200)
-    self.assertIn('stories', res.context)
-    self.assertEqual(res.context['stories'], [])
+    def test_story_detail_correct_content(self):
+        """Test story_detail view contains correct cintent."""
+        story = create_story()
+        url = detail_url(story.id)
+        res = self.client.get(url)
 
-
-def test_view_coorect_templates(self):
-    story = create_story()
-    url = detail_url(story.id)
-    res = self.client.get(url)
-
-    self.assertEqual(res.status_code, 200)
-    self.assertTemplateUsed(res, 'stories/create_story.html')
-
-
-def test_story_detail_correct_content(self):
-    """Test story_detail view contains correct cintent."""
-    story = create_story()
-    url = detail_url(story.id)
-    res = self.client.get(url)
-
-    self.assertEqual(res.status_code, 200)
-    self.assertContains(res, story.title)
-    self.assertContains(res, story.content)
+        self.assertEqual(res.status_code, 200)
+        self.assertContains(res, story.title)
+        self.assertContains(res, story.content)
 
 
 class AddRecordingViewTests(TestCase):

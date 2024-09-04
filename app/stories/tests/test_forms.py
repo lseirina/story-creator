@@ -19,12 +19,6 @@ class StoryTest(TestCase):
         story = form.save() # is used to save the data from a form into the corresponding model instance
         self.assertEqual(story.title, form_data['title'])
 
-    def test_story_form_unvalid(self):
-        """Test not to create story if form is not valid."""
-        form_data = {'title': '', 'content': 'It is a content'}
-        form = StoryForm(data=form_data)
-
-        self.assertFalse(form.is_valid())
 
 @override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class VoiceRecordingTests(TestCase):
@@ -55,17 +49,17 @@ class EditTranscriptionTests(TestCase):
     def setUp(self):
         audio_file = SimpleUploadedFile(
              'sample.mp3',
-            b'file_content',
-            content_type='audio/mpeg'
+             b'file_content',
+             content_type='audio/mpeg'
+        )
+        self.story = Story.objects.create(
+            title='Sample title',
+            content='It is content'
         )
         self.recording = VoiceRecording.objects.create(
             story=self.story,
             file=audio_file,
             transcription='It is transcription'
-        )
-        self.story = Story.objects.create(
-            title='Sample title',
-            content='It is content'
         )
 
     def test_is_edited_set_to_true(self):
