@@ -25,7 +25,10 @@ class VoiceRecording(models.Model):
 
     def save(self, *args, **kwargs):
         """Change is_edit to True if story exists."""
-        if self.pk and not VoiceRecording.objects.filter(pk=self.pk, transcription=self.transcription).exists():
+        if self.pk and not VoiceRecording.objects.filter(
+            pk=self.pk,
+            transcription=self.transcription
+        ).exists():
             self.is_edited = True
         super().save(*args, **kwargs)
 

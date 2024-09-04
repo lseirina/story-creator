@@ -73,5 +73,4 @@ class EditTranscriptionTests(TestCase):
 
         update_recording = form.save()
 
-        self.assertTrue(update_recording.is_valid())
         self.assertEqual(update_recording.transcription, 'Edited Transcription')
