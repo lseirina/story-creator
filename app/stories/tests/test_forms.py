@@ -65,7 +65,7 @@ class EditTranscriptionTests(TestCase):
     def test_is_edited_set_to_true(self):
         """Test is edited set to true after editing."""
         form = EditTranscriptionForm(
-                data={'transcription': "Edited transcription"},
+                data={'transcription': "Edited Transcription"},
                 instance=self.recording
             )
 

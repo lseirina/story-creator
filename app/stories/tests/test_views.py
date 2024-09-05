@@ -37,7 +37,7 @@ class StoryViewTests(TestCase):
         """Test the view uses correct templates."""
         res = self.client.get(STORIES_URL)
         self.assertEqual(res.status_code, 200)
-        self.assertTemplateUsed(res, 'stories/story_list.html')
+        self.assertTemplateUsed(res, 'story_list.html')
 
     def test_context_data(self):
         """Test the view passes correct context data."""
@@ -64,7 +64,7 @@ class StoryViewTests(TestCase):
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTemplateUsed(res, 'stories/create_story.html')
+        self.assertTemplateUsed(res, 'create_story.html')
 
     def test_story_detail_correct_content(self):
         """Test story_detail view contains correct cintent."""
@@ -102,7 +102,7 @@ class AddRecordingViewTests(TestCase):
         res = self.client.get(self.url)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTemplateUsed('stories/add_recording.html')
+        self.assertTemplateUsed('add_recording.html')
 
 
 class EditTranscription(TestCase):
@@ -140,7 +140,7 @@ class EditTranscription(TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.ssertContains(res, self.recording.transcription)
-        self.assertTemplateUsed(res, 'stories/edit_transcription.html')
+        self.assertTemplateUsed(res, 'edit_transcription.html')
 
     def test_edit_transcription_invalid_form(self):
         """Test invalid form edit transcription."""
