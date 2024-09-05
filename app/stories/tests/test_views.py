@@ -58,13 +58,13 @@ class StoryViewTests(TestCase):
         self.assertIn('stories', res.context)
         self.assertEqual(res.context['stories'], [])
 
-    def test_view_coorect_templates(self):
+    def test_view_correct_templates(self):
         story = create_story()
         url = detail_url(story.id)
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTemplateUsed(res, 'create_story.html')
+        self.assertTemplateUsed(res, 'story_detail.html')
 
     def test_story_detail_correct_content(self):
         """Test story_detail view contains correct cintent."""
@@ -80,7 +80,7 @@ class StoryViewTests(TestCase):
 class AddRecordingViewTests(TestCase):
     """"Tests for add recording view."""
 
-    def SetUp(self):
+    def setUp(self):
         self.story = create_story()
         self.client = Client()
         self.url = detail_url(self.story.id)
@@ -90,9 +90,9 @@ class AddRecordingViewTests(TestCase):
         audio_file = SimpleUploadedFile('sample.mp3',
                                         b'file_content',
                                         content_type='audio/mpeg')
-        res = self.client.post(self.story, {'file': audio_file})
+        res = self.client.post(self.url, {'file': audio_file})
 
-        self.assertEqual(res.status_code, 302)
+        self.assertEqual(res.status_code, 200)
         self.assertTrue(VoiceRecording.objects.filter(story=self.story).exists())
         recording = VoiceRecording.objects.get(story=self.story)
         self.assertEqual(recording.story, self.story)
@@ -148,8 +148,8 @@ class EditTranscription(TestCase):
         payload = {'transcription': ''}
         res = self.client.post(url, payload)
 
-        self.recording.fresh_from_db()
-        self.assertEqual(res.status_code, 200)
+        self.recording.refresh_from_db()
+        self.assertEqual(res.status_code, 302)
         self.assertContains(res, self.recording.transcription)
         self.assertFalse(self.recording.is_edited)
 
@@ -166,6 +166,6 @@ class EditTranscription(TestCase):
         payload = {'transcription': 'New transcription.'}
         res = self.client.post(url1, payload)
 
-        self.assertEqual(res.status_coce, 200)
+        self.assertEqual(res.status_code, 302)
         url2 = detail_url(self.recording.id)
         self.assertRedirects(res, url2)
