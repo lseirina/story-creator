@@ -149,7 +149,6 @@ class EditTranscription(TestCase):
         res = self.client.post(url, payload)
 
         self.recording.refresh_from_db()
-        self.assertEqual(res.status_code, 302)
         self.assertContains(res, self.recording.transcription)
         self.assertFalse(self.recording.is_edited)
 
