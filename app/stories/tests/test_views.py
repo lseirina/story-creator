@@ -58,7 +58,7 @@ class StoryViewTests(TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertIn('stories', res.context)
-        self.assertEqual(res.context['stories'], [])
+        self.assertEqual(len(res.context['stories']), 0)
 
     def test_view_correct_templates(self):
         story = create_story()
