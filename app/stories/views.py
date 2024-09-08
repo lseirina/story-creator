@@ -51,8 +51,8 @@ def edit_transcription(request, recording_id):
         if form.is_valid():
             form.save()
             return redirect('story_detail', story_id=recording.story.id)
-        else:
-            form = EditTranscriptionForm(instance=recording)
+    else:
+        form = EditTranscriptionForm(instance=recording)
     return render(request, 'edit_transcription.html', {'form': form}, {'recording': recording})
 
 
