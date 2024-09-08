@@ -1,9 +1,10 @@
 """Tests for views."""
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from stories.views import story_list
 from stories.models import Story, VoiceRecording
+import tempfile
 
 
 STORIES_URL = reverse('story_list')
@@ -29,6 +30,7 @@ def create_story(**params):
     return story
 
 
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class StoryViewTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -77,6 +79,7 @@ class StoryViewTests(TestCase):
         self.assertContains(res, story.content)
 
 
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class AddRecordingViewTests(TestCase):
     """"Tests for add recording view."""
 
@@ -105,6 +108,7 @@ class AddRecordingViewTests(TestCase):
         self.assertTemplateUsed('add_recording.html')
 
 
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class EditTranscription(TestCase):
     def setUp(self):
         self.client = Client()
@@ -152,7 +156,7 @@ class EditTranscription(TestCase):
         self.assertContains(res, self.recording.transcription)
         self.assertFalse(self.recording.is_edited)
 
-    def test_edit_transcription__recording_not_found(self):
+    def test_edit_transcription_recording_not_found(self):
         """Test edit transcription recordign not found return error."""
         url = recording_url(999)
         res = self.client.get(url)
