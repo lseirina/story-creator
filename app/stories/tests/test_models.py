@@ -90,6 +90,7 @@ class ModelTests(TestCase):
             file=audio_file,
             transcription='Sample Transcription'
         )
+        recording.save()
         recording.transcription = 'Editing Transcription'
         recording.save()
         self.assertTrue(recording.is_edited)

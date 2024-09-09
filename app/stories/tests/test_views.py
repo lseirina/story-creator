@@ -30,7 +30,6 @@ def create_story(**params):
     return story
 
 
-@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class StoryViewTests(TestCase):
     def setUp(self):
         self.client = Client()
