@@ -24,15 +24,14 @@ def create_story(request):
         if form.is_valid:
             form.save()
             return redirect('story_list')
-        else:
-            form = StoryForm()
+    else:
+        form = StoryForm()
     return render(request, 'create_story.html', {'form': form})
 
 
 def add_recording(request, story_id):
     """View to add story recording."""
     story = get_object_or_404(Story, id=story_id)
-
     if request.method == 'POST':
         form = VoiceRecordingForm(request.POST, request.FILES)
         if form.is_valid():
