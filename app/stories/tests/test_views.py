@@ -50,7 +50,7 @@ class StoryViewTests(TestCase):
 
         self.assertequal(res.status_code, 200)
         self.assertIn('stories', res.context)
-        self.assertEqual(len(res.context['syories'], 2))
+        self.assertEqual(len(res.context['stories'], 2))
 
     def test_empty_list(self):
         """Test view handles empty story."""
@@ -135,7 +135,7 @@ class EditTranscription(TestCase):
 
         self.recording.refresh_from_db()
         self.assertEqual(res.status_code, 302)
-        self.assertEqual(res.transcription, payload['transcription'])
+        self.assertEqual(self.recording.transcription, payload['transcription'])
 
     def test_edit_transcription_form_display(self):
         """Test form display edit transcription."""
