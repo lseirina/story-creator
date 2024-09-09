@@ -31,11 +31,13 @@ def create_story(request):
 
 def add_recording(request, story_id):
     """View to add story recording."""
+    story = get_object_or_404(Story, id=story_id)
+
     if request.method == 'POST':
         form = VoiceRecordingForm(request.POST, request.FILES)
         if form.is_valid():
             recording = form.save(commit=False)
-            recording.story_id = story_id
+            recording.story = story
             recording.save()
             return redirect('story_detail', story_id=story_id)
         else:
