@@ -53,6 +53,10 @@ def add_recording(request, story_id):
             recording = form.save(commit=False)
             recording.story = story
             recording.save()
+            audio_file_path = recording.file.path
+            transcription = transcribe_audio(audio_file_path)
+            recording.transcription = transcription
+            recording.save()
             return redirect('story_detail', story_id=story.id)
     else:
         form = VoiceRecordingForm()
