@@ -26,11 +26,7 @@ def create_story(request):
             return redirect('story_list')
     else:
         form = StoryForm()
-    context = {
-        'form': form,
-        'story': story,
-    }
-    return render(request, 'create_story.html', context)
+    return render(request, 'create_story.html', {'form': form})
 
 
 def add_recording(request, story_id):
@@ -45,7 +41,11 @@ def add_recording(request, story_id):
             return redirect('story_detail', story_id=story.id)
     else:
         form = VoiceRecordingForm()
-    return render(request, 'add_recording.html', {'form': form})
+    context = {
+        'form': form,
+        'story': story
+    }
+    return render(request, 'add_recording.html', context)
 
 
 def edit_transcription(request, recording_id):

@@ -5,10 +5,12 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from stories.views import story_list
 from stories.models import Story, VoiceRecording
 import tempfile
+import shutil
 
 
 STORIES_URL = reverse('story_list')
 
+MEDIA_ROOT_TEMP = tempfile.gettempdir()
 
 def detail_url(story_id):
     return reverse('story_detail', args=[story_id])
@@ -87,6 +89,10 @@ class AddRecordingViewTests(TestCase):
         self.client = Client()
         self.url = detail_url(self.story.id)
 
+    def tearDown(self):
+        """Delet temporary file after runind tests."""
+        shutil.rmtree(MEDIA_ROOT_TEMP)
+
     # def test_add_recording_success(self):
     #     """Test add recording to story is successful."""
     #     audio_file = SimpleUploadedFile('sample.mp3',
@@ -107,7 +113,7 @@ class AddRecordingViewTests(TestCase):
         self.assertTemplateUsed('add_recording.html')
 
 
-@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+@override_settings(MEDIA_ROOT=MEDIA_ROOT_TEMP)
 class EditTranscription(TestCase):
     def setUp(self):
         self.client = Client()
@@ -125,6 +131,10 @@ class EditTranscription(TestCase):
             file=audio_file,
             transcription='Test transcription.'
         )
+
+    def tearDown(self):
+        """Delet temporary file after runind tests."""
+        shutil.rmtree(MEDIA_ROOT_TEMP)
 
     def test_edit_transcription_success(self):
         """Test to edit recording is successful."""
