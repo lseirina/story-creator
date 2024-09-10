@@ -6,7 +6,11 @@
 <ul>
     {% for story in stories %}
         <li>
+            {% if story.id %}
             <a href="{% url 'story_detail' story_id %}">{{ story.title }}</a>
+            {% else %}
+                {{ story.title}}
+            {% endif %}
         </li>
     {% empty %}
         <p>No stories available.</p>
