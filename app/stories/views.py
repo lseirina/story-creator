@@ -3,6 +3,21 @@ from stories.models import Story, VoiceRecording
 from stories.forms import (StoryForm,
                            VoiceRecordingForm,
                            EditTranscriptionForm,)
+import os
+import speech_recognition as sr
+
+
+def transcribe_audio(audio_path):
+    """Transcribe audio using offline CMU Sphinx."""
+    recognizer = sr.Recognizer()
+    with sr.AudioFile(audio_path) as source:
+        audio = recognizer.record(source)
+    try:
+        return recognizer.recognize_sphinx(audio)
+    except sr.UnknownValueError:
+        return 'Could not understand audio.'
+    except sr.RequestError as e:
+        return f'Sphinx error: {e}'
 
 
 def story_list(request):
