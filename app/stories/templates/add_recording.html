@@ -6,7 +6,7 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Upload</button>
+    <button type="submit">Upload and Transcribe</button>
 </form>
 <a href="{% url 'story_detail' story.id %}">Back to Story</a>
 {% endblock %}
