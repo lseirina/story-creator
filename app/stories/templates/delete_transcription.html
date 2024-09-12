@@ -3,6 +3,9 @@
 
 {% block content %}
 <h>Delete Transcription For Recording {{recording.id}}</h>
+<p>Are you sure you want to delete task?</p>
+<p><strong>Title</strong>{{ recording.story.title }}</p>
+<p><strong>Transcription</strong>{{ recording.transcription }}</p>
 <form method='post'>
     {% csrf_token %}
     <button type='submit'>Delete</button>
