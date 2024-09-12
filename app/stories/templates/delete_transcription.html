@@ -1,13 +1,14 @@
-{% extends 'bse.html' %}
+{% extends 'base.html' %}
 {% block title %}Delete Transcription{% endblock %}
 
 {% block content %}
-<h>Delete Transcription For Recording {{recording.id}}</h>
-<p>Are you sure you want to delete task?</p>
-<p><strong>Title</strong>{{ recording.story.title }}</p>
-<p><strong>Transcription</strong>{{ recording.transcription }}</p>
-<form method='post'>
-    {% csrf_token %}
-    <button type='submit'>Delete</button>
-</form>
+    <h>Delete Transcription For Recording {{recording.id}}</h>
+    <p>Are you sure you want to delete recording?</p>
+    <p><strong>Title</strong>{{ recording.story.title }}</p>
+    <p><strong>Transcription</strong>{{ recording.transcription }}</p>
+    <form method='post'>
+        {% csrf_token %}
+        <button type='submit'>Delete</button>
+    </form>
+    <a href="{% url 'story_detail' recording.story.id %}">Cancel</a>
 {% endblock %}

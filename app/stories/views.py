@@ -90,8 +90,9 @@ def delete_transcription(request, recording_id):
     """View for deleteing transcription."""
     recording = get_object_or_404(VoiceRecording, id=recording_id)
     if request.method == 'POST':
+        story_id = recording.story.id
         recording.delete()
-        return redirect(story_list)
+        return redirect('story_detail', story_id=story_id)
     return render(request, 'delete_transcription.html', {'recording': recording})
 
 
