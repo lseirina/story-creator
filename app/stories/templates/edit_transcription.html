@@ -8,6 +8,7 @@
     {% csrf_token %}
     {{ form.as_p}}
     <button type="submit">Save Changes</button>
+    <p><a href="{% url 'delete_transcription' recording.id%}">Delete</a></p>
 
 </form>
 {% endblock %}

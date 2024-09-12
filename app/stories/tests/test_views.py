@@ -181,3 +181,11 @@ class EditTranscription(TestCase):
         self.assertEqual(res.status_code, 302)
         url2 = detail_url(self.recording.id)
         self.assertRedirects(res, url2)
+
+    def test_delete_recording_success(self):
+        """Test delete recording is successful."""
+        url = reverse('delete', args=[self.recording.id])
+        res = self.client(url)
+
+        self.assertEqual(res.status_code, 302)
+        self.assertFalse(VoiceRecording.objects.get().exists())

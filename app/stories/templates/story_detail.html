@@ -12,7 +12,6 @@
         <li>
             <a href="{% url 'edit_transcription' recording.id %}">Edit Transcription for Recording {{ recording.id }}</a>
             <p>{{ recording.transcription }}</p>
-            <a href="{% url 'delete_transcription' recording.id%}">Delete</a>
         </li>
     {% empty %}
         <p>No recordings available.</p>
