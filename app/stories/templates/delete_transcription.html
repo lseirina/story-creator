@@ -1,0 +1,10 @@
+{% extends 'bse.html' %}
+{% block title %}Delete Transcription{% endblock %}
+
+{% block content %}
+<h>Delete Transcription For Recording {{recording.id}}</h>
+<form method='post'>
+    {% csrf_token %}
+    <button type='submit'>Delete</button>
+</form>
+{% endblock %}

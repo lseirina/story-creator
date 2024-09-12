@@ -87,7 +87,7 @@ def edit_transcription(request, recording_id):
 
 
 def delete_transcription(request, recording_id):
-    """View fo rdeleteing transcription."""
+    """View for deleteing transcription."""
     recording = get_object_or_404(VoiceRecording, id=recording_id)
     if request.method == 'POST':
         recording.delete()
