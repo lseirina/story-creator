@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import (render, redirect,
+                              get_object_or_404,)
 from stories.models import Story, VoiceRecording
 from stories.forms import (StoryForm,
                            VoiceRecordingForm,
                            EditTranscriptionForm,)
+from django.http import HttpResponseForbidden
 import os
 import speech_recognition as sr
 
@@ -84,8 +86,13 @@ def edit_transcription(request, recording_id):
     return render(request, 'edit_transcription.html', context)
 
 
-
-
+def delete_transcription(request, recording_id):
+    """View fo rdeleteing transcription."""
+    recording = get_object_or_404(VoiceRecording, id=recording_id)
+    if request.method == 'POST':
+        recording.delete()
+        return redirect(story_list)
+    return render(request, 'delete_transcription.html', {'recording': recording})
 
 
 
