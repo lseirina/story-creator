@@ -3,7 +3,7 @@
 {% block title %}Edit Transcription{% endblock %}
 
 {% block content %}
-<h>Edit Transcription for Recording {{ recording.id }} </h>
+<h>Edit Transcription for Recording {{ recording.id }}</h>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p}}
