@@ -24,5 +24,8 @@ urlpatterns = [
     path('stories/<int:story_id>', views.story_detail, name='story_detail'),
     path('<int:story_id>/add_recording/', views.add_recording, name='add_recording'),
     path('<int:recording_id>/edit/',
-         views.edit_transcription, name='edit_transcription')
+         views.edit_transcription, name='edit_transcription'),
+    path('<int:recording_id>/delete/', views.delete_transcription,
+         name='delete_transcription')
+
 ]
