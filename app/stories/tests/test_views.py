@@ -184,8 +184,8 @@ class EditTranscription(TestCase):
 
     def test_delete_recording_success(self):
         """Test delete recording is successful."""
-        url = reverse('delete', args=[self.recording.id])
-        res = self.client(url)
+        url = reverse('delete_transcription', args=[self.recording.id])
+        res = self.client.post(url)
 
         self.assertEqual(res.status_code, 302)
         self.assertFalse(VoiceRecording.objects.get().exists())

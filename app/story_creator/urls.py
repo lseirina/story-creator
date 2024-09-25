@@ -26,6 +26,6 @@ urlpatterns = [
     path('<int:recording_id>/edit/',
          views.edit_transcription, name='edit_transcription'),
     path('<int:recording_id>/delete/', views.delete_transcription,
-         name='delete')
+         name='delete_transcription')
 
 ]
